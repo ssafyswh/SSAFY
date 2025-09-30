@@ -1,0 +1,14 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+<h2>main page</h2>
+<a href="{% url "bakeries:create" %}"><button>CREATE</button></a> 
+<a href="{% url "bakeries:test" %}"><button>DUMMY</button></a>
+{% for bakery in bakeries %}
+
+  <p>상호명: <a href="{% url 'bakeries:detail' bakery.id %}">{{ bakery.name }}</a></p>
+  <p>평점: {{ bakery.rating }}</p>
+  <hr>
+{% endfor %} 
+
+{% endblock content %}

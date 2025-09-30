@@ -1,0 +1,16 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+  <h1>Br_LIND</h1>
+  <a href="{% url "articles:create" %}">[글싸기]</a>
+  {% for article in articles %}
+  <ul>
+    <li>{{ article.title }}</li>
+    <li>{{ article.content }}</li>
+  </ul>
+  <hr>
+  {% empty %}
+    <p>게시글이 엄서용~~</p>
+  {% endfor %}
+
+{% endblock content %}

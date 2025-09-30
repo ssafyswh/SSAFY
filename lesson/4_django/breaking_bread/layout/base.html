@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Breaking Bread</title>
+  <style>
+    nav {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      background-color: #067edb;
+    }
+  </style>
+</head>
+<body>
+  <p>{{ request.user }}님, 환영합니다!</p>
+  <nav>
+    <div class='nav-left'>
+      |
+      <a href="{% url 'bakeries:index' %}">HOME</a> |
+      <a href="{% url "articles:index" %}">Br_LIND</a> |
+    </div>
+    <div class='nav-right'> 
+      <a href="{% url "accounts:signup" %}">SignUp</a> |
+      <a href="{% url "accounts:login" %}">Login</a>
+    </div>
+  </nav>
+
+  <h1>빵집 추천</h1>
+
+  {% block content %}
+  {% endblock content %}
+  
+</body>
+</html>
