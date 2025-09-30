@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ThRead - Popular Thread</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <style>
+      /* 폰트 정의 */
+      @font-face {
+        font-family: "SBAggro_L";
+        src: url("assets/fonts/SBAggroOTF_L.ttf") format("ttf");
+      }
+      @font-face {
+        font-family: "GmarketSansTTFMedium";
+        src: url("assets/fonts/GmarketSansTTFMedium.ttf") format("ttf");
+      }
+
+      /* 기본 스타일 */
+      .thread {
+        font-family: "SBAggro_L";
+        background-color: #f8f9fa;
+      }
+
+      .popular-thread {
+        text-align: center;
+        padding-top: 5rem;
+      }
+
+      .section-title {
+        font-family: "SBAggro_L";
+        font-weight: bold;
+        color: #343a40;
+      }
+      
+      .section-subtitle {
+        font-family: "GmarketSansTTFMedium";
+        color: #6c757d;
+        margin-bottom: 2rem;
+      }
+
+      /* 카드 스타일 */
+      .card {
+        border-radius: 1rem;
+        border: none;
+        transition: transform 0.2s;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      .card-img-top {
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .card-body {
+        padding: 1.5rem;
+        text-align: center;
+      }
+
+      .card-title {
+        font-family: "SBAggro_L";
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #212529;
+        margin-bottom: 0.5rem;
+        white-space: nowrap;
+        overflow: hidden;
+        overflow-wrap: break-word;
+      }
+
+      .card-text {
+        font-family: "GmarketSansTTFMedium";
+        color: #495057;
+        font-size: 0.9rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* 2줄로 제한 */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 1rem;
+      }
+
+      .card-footer {
+        font-family: "GmarketSansTTFMedium";
+        background-color: transparent;
+        border-top: 1px solid #e9ecef;
+        padding-top: 1rem;
+        font-size: 0.85rem;
+        color: #6c757d;
+      }
+
+      /* 페이지네이션 스타일 */
+      .pagination .page-link {
+        border: none;
+        background-color: transparent;
+        color: #495057;
+        font-family: "GmarketSansTTFMedium";
+        font-weight: normal;
+        margin: 0 0.25rem;
+        border-radius: 0.5rem;
+      }
+
+      .pagination .page-link:hover {
+        background-color: #f1f1f1;
+        color: #fe4a51;
+      }
+
+      .pagination .page-item.active .page-link {
+        background-color: transparent;
+        border: none;
+        color: #fe4a51; /* 활성화된 페이지 번호 텍스트 색상 */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 인기 쓰레드 섹션 -->
+    <section class="thread py-5 bg-light">
+      <div class="popular-thread">
+        <h3 class="section-title">지금 이 쓰레드</h3>
+        <h4 class="section-subtitle">최근 사람들이 많이 공감한 게시글입니다</h4>
+      </div>
+      <div class="container">
+        <div class="row">
+          <!-- 카드 컴포넌트 -->
+          <div class="col-12 col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+              <img
+                src="./assets/threads/img5.jpg"
+                class="card-img-top"
+                alt="Thread Image"
+              />
+              <div class="card-body">
+                <h5 class="card-title">흔들리는 바람 속에서도 멈추지 않는 용기</h5>
+                <p class="card-text">
+                  어릴 적부터 삶의 무게가 나를 짓누르기 시작했다. 무섭고 힘든 이
+                  책은 그런 내가 되길 바라는 숭고한 소망을 담고 있었다.
+                  반복되는 무력함 보다는 무엇인가...
+                </p>
+                <div style="text-align: center;">
+                  <span>김민정 | </span>
+                  <span style="color: red;">바람을 닮아가는 아이</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+              <img
+                src="./assets/threads/img2.jpg"
+                class="card-img-top"
+                alt="Thread Image"
+              />
+              <div class="card-body">
+                <h5 class="card-title">
+                  꿈은 언제나 현실의 빛을 준비하고 있다
+                </h5>
+                <p class="card-text">
+                  이 작은 글은 꿈을 조금씩 성장해 가고 있음을 느끼고, 감사하게
+                  되었다.
+                </p>
+                <div style="text-align: center;">
+                  <span>박지훈 | </span>
+                  <span style="color: red;">내 책상의 작은 불빛</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+              <img
+                src="./assets/threads/img3.jpg"
+                class="card-img-top"
+                alt="Thread Image"
+              />
+              <div class="card-body">
+                <h5 class="card-title">인공지능 문제 해결에 성공하는 꿀팁</h5>
+                <p class="card-text">
+                  기술적인 지식뿐만 아니라 실제적인 문제 해결 경험과 꾸준한
+                  학습의 중요성을 강조. 단순한 암기가 아닌, 스스로 사고하고
+                  새로운 해결책을 모색...
+                </p>
+                <div style="text-align: center;">
+                  <span>최현우 | </span>
+                  <span style="color: red;">Mastering AI</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+              <img
+                src="./assets/threads/img4.jpg"
+                class="card-img-top"
+                alt="Thread Image"
+              />
+              <div class="card-body">
+                <h5 class="card-title">사소함이 지닌 놀라운 힘</h5>
+                <p class="card-text">
+                  작은 행동 하나, 간단한 대화 한마디가 얼마나 큰 변화를 만들어낼
+                  수 있는지 깨닫게 해 준 책이다.
+                </p>
+                <div style="text-align: center;">
+                  <span>이윤서 | </span>
+                  <span style="color: red;">작은 시작, 큰 기적</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+              <img
+                src="./assets/threads/img1.jpg"
+                class="card-img-top"
+                alt="Thread Image"
+              />
+              <div class="card-body">
+                <h5 class="card-title">상실의 아픔을 넘어 빛으로</h5>
+                <p class="card-text">
+                  '자신을 잃지 않는 법'이 무엇인지 고민하던 사람들에게 큰 위로가
+                  될 책.
+                </p>
+                <div style="text-align: center;">
+                  <span>권민정 | </span>
+                  <span style="color: red;">다시 피어나는 꽃처럼</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+              <img
+                src="./assets/threads/img6.jpg"
+                class="card-img-top"
+                alt="Thread Image"
+              />
+              <div class="card-body">
+                <h5 class="card-title">아이러니 속에서 피어나는 희망</h5>
+                <p class="card-text">
+                  모든 상황들이 복잡하고, 예상이 깨지는 순간들이 이어지겠지만
+                  그 속에서 단단히 피어나는 희망의 불씨가 있었던 이야기
+                </p>
+                <div style="text-align: center;">
+                  <span>정우진 | </span>
+                  <span style="color: red;">켜켜이 쌓는 감정들</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Pagination -->
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center mt-4">
+          <li class="page-item active" aria-current="page">
+            <a class="page-link" href="#">1</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+        </ul>
+      </nav>
+    </section>
+    <!-- Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

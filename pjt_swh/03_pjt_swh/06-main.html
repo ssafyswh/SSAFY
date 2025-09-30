@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ThRead - Popular Thread</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <link href="01" />
+  <style>
+    @font-face {
+      font-family: "SBAggro_L";
+      src: url("assets/fonts/SBAggroOTF_L.ttf") format("ttf");
+    }
+
+    @font-face {
+      font-family: "GmarketSansTTFMedium";
+      src: url("assets/fonts/GmarketSansTTFMedium.ttf") format("ttf");
+    }
+
+    .sbaggro {
+      font-family: "SBAggro_L"
+    }
+
+    .gmarket {
+      font-family: "GmarketSansTTFMedium"
+    }
+
+    /* F01. navbar */
+    .navbar {
+      z-index: 10;
+    }
+
+    .Th {
+      color: white;
+    }
+
+    .Read {
+      color: #fe4a51;
+    }
+
+    .navbar-nav>.nav-link {
+      color: white;
+      font-family: "SBAggro_L";
+    }
+
+    .navbar-nav>.nav-link:hover {
+      color: #fe4a51;
+    }
+
+    .navbar-toggler {
+      border-color: white
+    }
+
+    .navbar-toggler:focus {
+      box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25)
+    }
+
+    .navbar-nav.text-end .nav-item {
+      text-align: right;
+    }
+
+    /* F02. Hero 섹션 */
+    .hero-section {
+      min-height: 80vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+    }
+
+    .hero-section img.hero-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .hero-overlay {
+      background: rgba(0, 0, 0, 0.5);
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+    }
+
+    .hero-title {
+      font-family: "GmarketSansTTFMedium";
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: rgba(74, 74, 74, 0.6);
+      border-radius: 0.2rem;
+      padding: 0 1rem;
+    }
+
+    .hero-subtitle {
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+
+    .hero-subtitle .th {
+      color: #fff;
+      font-family: "GmarketSansTTFMedium";
+    }
+
+    .hero-subtitle .read {
+      color: #fe4a51;
+      font-family: "GmarketSansTTFMedium";
+    }
+
+    .section-title {
+      font-weight: 700;
+      color: #1a1a1a;
+      text-align: left;
+      margin-bottom: 0;
+    }
+
+    /* F03. Bestseller */
+    .bestseller-book {
+      text-align: center;
+    }
+
+    .bestseller-book img {
+      width: 150px;
+      height: 220px;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .bestseller-book-title {
+      margin-top: 0.75rem;
+      font-size: 1rem;
+      font-weight: 500;
+      line-height: 1.3;
+      color: #333;
+    }
+
+    .carousel-control-next {
+      top: 50%;
+      transform: translateY(-50%);
+      width: 5%;
+      background-image: none;
+      opacity: 1;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    }
+
+    .carousel {
+      height: 300px;
+    }
+
+    /* F04. AI recommendation */
+
+    .ai-recommendation {
+      width: 80%;
+      margin: 0 auto;
+      padding: 0 0;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .section-title {
+      font-family: "GmarketSansTTFMedium";
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    #text-highlight {
+      font-family: "SBAggroOTF_L";
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: #fe4a51;
+    }
+
+    /* F05. Genre List */
+
+    .section-title {
+      text-align: center;
+      color: #333;
+    }
+
+    .genre-grid {
+      margin: 10 auto;
+      padding: 50px;
+    }
+
+    .genre-item {
+      position: relative;
+      overflow: hidden;
+      margin: 10px;
+      flex-basis: calc(25% - 20px);
+    }
+
+    .genre-item img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .genre-text {
+      position: absolute;
+      display: block;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      color: white;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    /* F06. Popular Thread */
+
+    /* 기본 스타일 */
+    .thread {
+      font-family: "SBAggro_L";
+      background-color: #f8f9fa;
+    }
+
+    .popular-thread {
+      text-align: center;
+      padding-top: 5rem;
+    }
+
+    .section-title {
+      font-family: "SBAggro_L";
+      font-weight: bold;
+      color: #343a40;
+    }
+
+    .section-subtitle {
+      font-family: "GmarketSansTTFMedium";
+      color: #6c757d;
+      margin-bottom: 2rem;
+    }
+
+    /* 카드 스타일 */
+    .card {
+      border-radius: 1rem;
+      border: none;
+      transition: transform 0.2s;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.05);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-img-top {
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .card-title {
+      font-family: "SBAggro_L";
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #212529;
+      margin-bottom: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      overflow-wrap: break-word;
+    }
+
+    .card-text {
+      font-family: "GmarketSansTTFMedium";
+      color: #495057;
+      font-size: 0.9rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      /* 2줄로 제한 */
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+
+    .card-footer {
+      font-family: "GmarketSansTTFMedium";
+      background-color: transparent;
+      border-top: 1px solid #e9ecef;
+      padding-top: 1rem;
+      font-size: 0.85rem;
+      color: #6c757d;
+    }
+
+    /* 페이지네이션 스타일 */
+    .pagination .page-link {
+      border: none;
+      background-color: transparent;
+      color: #495057;
+      font-family: "GmarketSansTTFMedium";
+      font-weight: normal;
+      margin: 0 0.25rem;
+      border-radius: 0.5rem;
+    }
+
+    .pagination .page-link:hover {
+      background-color: #f1f1f1;
+      color: #fe4a51;
+    }
+
+    .pagination .page-item.active .page-link {
+      background-color: transparent;
+      border: none;
+      color: #fe4a51;
+      /* 활성화된 페이지 번호 텍스트 색상 */
+    }
+
+    /* 미디어쿼리 */
+    @media (max-width: 412px) {
+      .genre-item {
+        flex-basis: 100%;
+        height: auto;
+        margin: 10px 0;
+      }
+
+      .genre-text {
+        font-size: 12px;
+        padding: 10px 8px 8px;
+      }
+    }
+
+    @media (max-width: 412px) {
+      .d-412-break {
+        display: block;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 01-1. NavBar -->
+  <nav class="navbar position-absolute top-0 w-100 navbar-expand-lg bg-transparent">
+    <div class="container-fluid ">
+      <h1 class="ms-sm-5 navbar gmarket Th fs-3">Th<span class="navbar Read">Read</span></h1>
+      <button class="navbar-toggler me-sm-5" type="button" data-bs-toggle="collapse"
+        data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end me-sm-5" id="navbarNavAltMarkup">
+        <div class="sbaggro navbar-nav text-end">
+          <a class="nav-link" href="#">쓰레드</a>
+          <a class="nav-link" href="#">도서 검색</a>
+          <a class="nav-link" href="#">마이 페이지</a>
+          <a class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal" href="#">로그아웃</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- 01-2. Hero 섹션 -->
+  <section class="hero-section">
+    <img src="assets/nav/hero_image.jpg" alt="Hero Image" class="hero-img" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title align-middle">
+        AI 기반 도서 분석 및<span class="d-sm-none d-block"></span> 창작 지원 통합 솔루션 서비스
+      </h1>
+      <span class="hero-subtitle gmarket Th">Th<span class="hero-subtitle Read">Read</span></span>
+    </div>
+  </section>
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body mx-auto">
+          <p>정말 로그아웃 하시겠습니까?</p>
+        </div>
+        <div class="modal-footer mx-auto">
+          <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">취소</button>
+          <button type="button" class="btn btn-danger">로그아웃</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02. Bestseller  -->
+  <section class="bestseller py-5">
+    <div class="container bestseller-container">
+      <div class="row align-items-center mb-4">
+        <div class="col-md-3">
+          <h3 class="section-title">베스트셀러</h3>
+        </div>
+        <div class="col-md-9">
+          <!-- 
+              [과제 안내]
+              아래 영역에 Bootstrap Carousel 컴포넌트를 이용해
+              - 총 12권의 도서를 4권씩 나눈 슬라이드를 구현하고,
+              - 각 도서는 도서 커버 이미지와 제목으로 구성하며,
+              - 우측에만 표시되는 Next 컨트롤 버튼을 포함하도록 작성하세요.
+            -->
+          <div id="carouselExample" class="carousel slide">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <div class="row row-cols-2 row-cols-md-4 g-4">
+                  <div class="col bestseller-book">
+                    <img src="assets/bestsellers/img1.jpeg" alt="도서 1 커버" class="img-fluid">
+                    <p class="bestseller-book-title">소년이 온다</p>
+                  </div>
+                  <div class="col bestseller-book">
+                    <img src="assets/bestsellers/img2.jpeg" alt="도서 2 커버" class="img-fluid">
+                    <p class="bestseller-book-title">채식주의자</p>
+                  </div>
+                  <div class="col bestseller-book">
+                    <img src="assets/bestsellers/img3.jpeg" alt="도서 3 커버" class="img-fluid">
+                    <p class="bestseller-book-title">대온실 수리 보고서</p>
+                  </div>
+                  <div class="col bestseller-book">
+                    <img src="assets/bestsellers/img4.jpeg" alt="도서 4 커버" class="img-fluid">
+                    <p class="bestseller-book-title">급류</p>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="row row-cols-2 row-cols-md-4 g-4">
+                  <div class="col bestseller-book">
+                    <img src="assets/bestsellers/img5.jpeg" alt="도서 5 커버" class="img-fluid">
+                    <p class="bestseller-book-title">시간의 계곡</p>
+                  </div>
+                  <div class="col bestseller-book">
+                    <img src="assets/bestsellers/img6.jpeg" alt="도서 6 커버" class="img-fluid">
+                    <p class="bestseller-book-title">인간 실격</p>
+                  </div>
+                  <div class="col bestseller-book">
+                    <img src="assets/bestsellers/img7.jpeg" alt="도서 7 커버" class="img-fluid">
+                    <p class="bestseller-book-title">노르웨이의 숲</p>
+                  </div>
+                  <div class="col bestseller-book">
+                    <img src="assets/bestsellers/img8.jpeg" alt="도서 8 커버" class="img-fluid">
+                    <p class="bestseller-book-title">정원에 대하여</p>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="row row-cols-2 row-cols-md-4 g-4">
+                  <div class="col bestseller-book">
+                    <img src="assets/bestsellers/img9.jpeg" alt="도서 9 커버" class="img-fluid">
+                    <p class="bestseller-book-title">네 칼이 센가, 내 칼이 센가.</p>
+                  </div>
+                  <div class="col bestseller-book">
+                    <img src="assets/bestsellers/img10.jpeg" alt="도서 10 커버" class="img-fluid">
+                    <p class="bestseller-book-title">새벽의 사원</p>
+                  </div>
+                  <div class="col bestseller-book">
+                    <img src="assets/bestsellers/img11.jpeg" alt="도서 11 커버" class="img-fluid">
+                    <p class="bestseller-book-title">위싱 머신</p>
+                  </div>
+                  <div class="col bestseller-book">
+                    <img src="assets/bestsellers/img12.jpeg" alt="도서 12 커버" class="img-fluid">
+                    <p class="bestseller-book-title">모순</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03. AI recommendation -->
+  <!-- AI 추천 섹션 -->
+  <section class="container py-5">
+    <div class="ai-recommendation d-flex align-items-center">
+      <!-- 과제 안내:
+             1. Bootstrap의 grid 시스템을 활용하여 "AI 추천" 섹션을 구현하세요.
+             2. 섹션 전체 폭은 80%로 설정하며, 중앙에 배치합니다.
+             3. 좌측 영역에는 AI가 추천한 도서 3권의 이미지를, 우측 영역에는 서비스 소개 텍스트를 배치합니다.
+             4. 좌측 영역과 우측 영역의 비율은 7:5로 설정하고, 두 영역은 수직 중앙 정렬되어야 합니다.
+             5. 서비스 소개 텍스트 내 "활동 데이터 기반" 부분은 강조 처리하여, 
+                - 색상: #fe4a51, 
+                - 글꼴: SBAggroOTF_L, 
+                - 글자 크기: 1.3rem 
+                이 적용되도록 작성하세요.
+             
+             ※ 이외 필요한 레이아웃 및 스타일은 여러분의 창의성을 발휘하여 추가하실 수 있습니다.
+        -->
+      <!-- 좌측: 도서 이미지 영역 -->
+      <div class="d-flex me-4 col-7">
+        <img src="assets/ai_recommendation/img1.jpeg" alt="Bauhaus" class="img-fluid me-3 mt-3"
+          style="max-width: 120px; min-height: 180px" />
+        <img src="assets/ai_recommendation/img2.jpeg" alt="Mastering AI" class="img-fluid me-3"
+          style="width: 140px; height: 210px" />
+        <img src="assets/ai_recommendation/img3.jpeg" alt="Design" class="img-fluid me-3 mt-3"
+          style="max-width: 120px; min-height: 180px" />
+      </div>
+      <!-- 우측: 서비스 소개 텍스트 영역 -->
+      <div class="flex-grow-1">
+        <h3 class="mb-3 section-title">AI 추천</h3>
+        <p class="text-muted">구매 목록, 감명 깊게 읽은 도서 등</p>
+        <p class="text-muted">사용자 <span id="text-highlight">활동 데이터 기반</span> 인공지능 도서 추천</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04. Genre -->
+  <section class="genre-books d-flex flex-column justify-content-center">
+    <h3 class="section-title">장르별 도서 목록</h3>
+    <!-- 
+        [과제 안내]
+        아래 영역에 Flexbox 컨테이너(예: <div class="genre-grid">)를 만들고,
+        각 장르 아이템을 4열로 배치하는 코드를 작성하세요.
+        * 화면 폭 412px 이하에서는 1열로 배치되도록 미디어 쿼리가 적용되어야 합니다.
+      -->
+    <!-- 코드는 여기에 작성하시오 -->
+    <div class="genre-grid container">
+      <div class="row g-2">
+        <div class="genre-item col-3">
+          <img src="./assets/genre/travel.jpg">
+          <div class="genre-text">여행</div>
+        </div>
+        <div class="genre-item col-3">
+          <img src="./assets/genre/health.jpg">
+          <div class="genre-text">건강</div>
+        </div>
+        <div class="genre-item col-3">
+          <img src="./assets/genre/art.jpg">
+          <div class="genre-text">예술</div>
+        </div>
+        <div class="genre-item col-3">
+          <img src="./assets/genre/history.jpg">
+          <div class="genre-text">역사</div>
+        </div>
+        <div class="genre-item col-3">
+          <img src="./assets/genre/economy.jpg">
+          <div class="genre-text">경제</div>
+        </div>
+        <div class="genre-item col-3">
+          <img src="./assets/genre/philosophy.jpg">
+          <div class="genre-text">철학</div>
+        </div>
+        <div class="genre-item col-3">
+          <img src="./assets/genre/natural_science.jpg">
+          <div class="genre-text">자연과학</div>
+        </div>
+        <div class="genre-item col-3">
+          <img src="./assets/genre/baby.jpg">
+          <div class="genre-text">육아</div>
+        </div>
+        <div class="genre-item col-3">
+          <img src="./assets/genre/youth.jpg">
+          <div class="genre-text">청소년</div>
+        </div>
+        <div class="genre-item col-3">
+          <img src="./assets/genre/romance.jpg">
+          <div class="genre-text">로맨스</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05. Popular_Thread -->
+  <section class="thread py-5 bg-light">
+    <div class="popular-thread">
+      <h2 class="section-title">지금 이 쓰레드</h2>
+      <h4 class="section-subtitle">최근 사람들이 많이 공감한 게시글입니다</h4>
+    </div>
+    <div class="container">
+      <div class="row">
+        <!-- 카드 컴포넌트 -->
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+          <div class="card h-100">
+            <img src="./assets/threads/img5.jpg" class="card-img-top" alt="Thread Image" />
+            <div class="card-body">
+              <h5 class="card-title">흔들리는 바람 속에서도 멈추지 않는 용기</h5>
+              <p class="card-text">
+                어릴 적부터 삶의 무게가 나를 짓누르기 시작했다. 무섭고 힘든 이
+                책은 그런 내가 되길 바라는 숭고한 소망을 담고 있었다.
+                반복되는 무력함 보다는 무엇인가...
+              </p>
+              <div style="text-align: center;">
+                <span>김민정 | </span>
+                <span style="color: red;">바람을 닮아가는 아이</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+          <div class="card h-100">
+            <img src="./assets/threads/img2.jpg" class="card-img-top" alt="Thread Image" />
+            <div class="card-body">
+              <h5 class="card-title">
+                꿈은 언제나 현실의 빛을 준비하고 있다
+              </h5>
+              <p class="card-text">
+                이 작은 글은 꿈을 조금씩 성장해 가고 있음을 느끼고, 감사하게
+                되었다.
+              </p>
+              <div style="text-align: center;">
+                <span>박지훈 | </span>
+                <span style="color: red;">내 책상의 작은 불빛</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+          <div class="card h-100">
+            <img src="./assets/threads/img3.jpg" class="card-img-top" alt="Thread Image" />
+            <div class="card-body">
+              <h5 class="card-title">인공지능 문제 해결에 성공하는 꿀팁</h5>
+              <p class="card-text">
+                기술적인 지식뿐만 아니라 실제적인 문제 해결 경험과 꾸준한
+                학습의 중요성을 강조. 단순한 암기가 아닌, 스스로 사고하고
+                새로운 해결책을 모색...
+              </p>
+              <div style="text-align: center;">
+                <span>최현우 | </span>
+                <span style="color: red;">Mastering AI</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+          <div class="card h-100">
+            <img src="./assets/threads/img4.jpg" class="card-img-top" alt="Thread Image" />
+            <div class="card-body">
+              <h5 class="card-title">사소함이 지닌 놀라운 힘</h5>
+              <p class="card-text">
+                작은 행동 하나, 간단한 대화 한마디가 얼마나 큰 변화를 만들어낼
+                수 있는지 깨닫게 해 준 책이다.
+              </p>
+              <div style="text-align: center;">
+                <span>이윤서 | </span>
+                <span style="color: red;">작은 시작, 큰 기적</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+          <div class="card h-100">
+            <img src="./assets/threads/img1.jpg" class="card-img-top" alt="Thread Image" />
+            <div class="card-body">
+              <h5 class="card-title">상실의 아픔을 넘어 빛으로</h5>
+              <p class="card-text">
+                '자신을 잃지 않는 법'이 무엇인지 고민하던 사람들에게 큰 위로가
+                될 책.
+              </p>
+              <div style="text-align: center;">
+                <span>권민정 | </span>
+                <span style="color: red;">다시 피어나는 꽃처럼</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+          <div class="card h-100">
+            <img src="./assets/threads/img6.jpg" class="card-img-top" alt="Thread Image" />
+            <div class="card-body">
+              <h5 class="card-title">아이러니 속에서 피어나는 희망</h5>
+              <p class="card-text">
+                모든 상황들이 복잡하고, 예상이 깨지는 순간들이 이어지겠지만
+                그 속에서 단단히 피어나는 희망의 불씨가 있었던 이야기
+              </p>
+              <div style="text-align: center;">
+                <span>정우진 | </span>
+                <span style="color: red;">켜켜이 쌓는 감정들</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Pagination -->
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center mt-4">
+        <li class="page-item active" aria-current="page">
+          <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+      </ul>
+    </nav>
+  </section>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
