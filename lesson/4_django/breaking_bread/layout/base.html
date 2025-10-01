@@ -22,8 +22,16 @@
       <a href="{% url "articles:index" %}">Br_LIND</a> |
     </div>
     <div class='nav-right'> 
-      <a href="{% url "accounts:signup" %}">SignUp</a> |
-      <a href="{% url "accounts:login" %}">Login</a>
+      {% if request.user.is_authenticated %}
+      <form action="{% url "accounts:logout" %}" method="POST">
+        {% csrf_token %}
+        <button>logout</button>
+      </form>
+      {% else %}
+      |
+        <a href="{% url "accounts:signup" %}">SignUp</a> |
+        <a href="{% url "accounts:login" %}">Login</a>|
+      {% endif %}
     </div>
   </nav>
 

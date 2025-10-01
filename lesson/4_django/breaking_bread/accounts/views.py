@@ -27,6 +27,10 @@ def login(request):
         if form.is_valid():
             user = form.get_user()
             auth_login(request, user)
+
+            next_url = request.GET.get('next')
+            if next_url:
+                return redirect(next_url)
             return redirect('bakeries:index')
     else:
         form = AuthenticationForm()
@@ -34,3 +38,7 @@ def login(request):
         'form': form,
     }
     return render(request, 'accounts/login.html', context)    
+
+def logout(request):
+    auth_logout(request)
+    return redirect('bakeries:index')
