@@ -4,7 +4,6 @@ sys.stdin = open('input.txt')
 
 import sys
 
-T = int(input())
-for _ in range(T):
-    n, k, t, m = map(int, sys.stdin.readline().split())
+
+        
     
