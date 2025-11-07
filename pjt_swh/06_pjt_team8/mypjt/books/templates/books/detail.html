@@ -1,0 +1,44 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+    <h1 class='my-4 ms-3'>도서 상세 정보</h1>
+    <h3 class='my-4 ms-3'>{{ book.title }} </h3>
+    <h5 class='my-4 ms-3'>저자 - {{ book.author }}</h5>
+    <h5 class='my-4 ms-3'>평점: {{book.rating}} / 5.0</h5>
+    <p class='my-4 ms-3'>{{ book.content }}</p>
+    
+    <div class='border-top border-bottom'>
+    <div class="d-flex gap-2 ms-3 mb-3 mt-3">
+        <a href="{% url 'books:update' book.id %}" class='my-0'>
+            <button class="btn btn-secondary">수정</button>
+        </a>
+
+        <form action="{% url 'books:delete' book.id %}" method="POST" class='my-0'>
+            {% csrf_token %}
+            <button class="btn btn-danger">삭제</button>
+        </form>
+    </div>
+    
+    <h1>Thread</h1>
+    {% comment %} thread 바로가기 링크 {% endcomment %}
+    {% comment %} <a href=""> {{  }} </a> {% endcomment %}
+    <ul>
+    {% for thread in threads %}
+
+    <li>
+        <a href="{% url 'books:thread_detail' thread.id %}">
+        {{ thread.title }}
+        </a>
+    </li>
+    {% empty %}
+    <p>아직 작성된 쓰레드가 없습니다.</p>
+    {% endfor %}
+    </ul>
+    <a href="{% url "books:thread_create" book.id %}"><button class="btn btn-primary">Thread 생성</button></a>
+
+    <a href="{% url 'books:index' %}" class="ms-3 my-0">
+      <button class="btn btn-primary">뒤로</button>
+    </a>
+
+    </div>
+{% endblock content %}

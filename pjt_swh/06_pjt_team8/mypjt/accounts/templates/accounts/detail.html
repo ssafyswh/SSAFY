@@ -1,0 +1,14 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+
+<h2>회원정보</h2>
+<hr>
+{% for user_info in request.user %}
+
+  <p>{{ user_info }}</p>
+
+{% endfor %}
+</form>
+
+{% endblock content %}
