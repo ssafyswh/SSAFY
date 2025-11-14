@@ -1,0 +1,53 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+  <div class="container py-5" style="max-width: 720px;">
+    <h2 class="mb-4 fw-semibold">🎬 영화 수정</h2>
+
+    <form action="{% url 'movies:update' movie.id %}" method="POST" onsubmit="return validateForm()">
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label for="title" class="form-label fw-medium">제목</label>
+        <input type="text" id="title" name="title" class="form-control" value="{{ movie.title }}" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="story" class="form-label fw-medium">줄거리</label>
+        <textarea id="story" name="story" class="form-control" rows="10" style="resize: vertical;" required>{{ movie.story }}</textarea>
+      </div>
+
+      <div class="mb-4">
+        <label for="director" class="form-label fw-medium">감독</label>
+        <input type="text" id="director" name="director" class="form-control" value="{{ movie.director }}" required>
+      </div>
+
+      <button type="submit" class="btn btn-info px-4 py-2">제출</button>
+    </form>
+  </div>
+
+  <script>
+    function validateForm() {
+      const title = document.getElementById('title').value.trim();
+      const story = document.getElementById('story').value.trim();
+      const director = document.getElementById('director').value.trim();
+
+      if (title.length < 1) {
+        alert("제목을 한 글자 이상 입력해주세요.");
+        return false;
+      }
+
+      if (story.length < 1) {
+        alert("줄거리를 한 글자 이상 입력해주세요.");
+        return false;
+      }
+
+      if (director.length < 1) {
+        alert("감독 이름을 한 글자 이상 입력해주세요.");
+        return false;
+      }
+
+      return true;
+    }
+  </script>
+{% endblock content %}

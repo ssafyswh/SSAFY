@@ -1,0 +1,25 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+    <h1 class='my-4 ms-3'>영화 상세 페이지</h1>
+    <h3 class='my-4 ms-3'>{{ movie.title }}</h3>
+    <h6 class='my-4 ms-3'>감독 - {{ movie.director }}</h6>
+    <p class='my-4 ms-3'>{{ movie.story }}</p>
+    
+   
+    <div class='border-top border-bottom'>
+    <div class="d-flex gap-2 ms-3 mb-3 mt-3">
+        <a href="{% url 'movies:index' %}" class="ms-3 my-0">
+          <button class="btn btn-primary">뒤로</button>
+        </a>
+        <a href="{% url 'movies:update' movie.id %}" class='my-0'>
+            <button class="btn btn-secondary">수정</button>
+        </a>
+
+        <form action="{% url 'movies:delete' movie.id %}" method="POST" class='my-0'>
+            {% csrf_token %}
+            <button class="btn btn-danger">삭제</button>
+        </form>
+    </div>
+    </div>
+{% endblock content %}

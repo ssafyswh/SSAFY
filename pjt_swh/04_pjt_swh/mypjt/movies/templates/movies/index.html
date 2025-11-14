@@ -1,0 +1,21 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+  <h1 class='pt-4 mb-4 ms-5'>메인 페이지</h1>
+  <div class='row row-cols-1 mx-5 g-4'>
+  {% for movie in movies %}
+    <div class='col-6'>
+      <div class="card">
+        <div class='card-header align-middle'>
+          <span class="card-title fw-bolder mb-0">{{ movie.title }}</span>
+        </div>
+        <div class="card-body">
+          {% comment %} <h6 class="card-subtitle mb-2 text-body-secondary">감독: {{ movie.director }}</h6> {% endcomment %}
+          <p class="card-text">{{ movie.story }}</p>
+          <a class="btn btn-info" href="{% url "movies:detail" movie.id %}" role="button">상세 정보</a>
+        </div>
+    </div>
+  </div>
+  {% endfor %}
+   </div>
+{% endblock content %}
