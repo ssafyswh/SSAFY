@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@1.3.6/dist/web/static/pretendard.css" />
+
+<style>
+  body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', sans-serif;
+    color: #1e1e1e;
+    background-color: #f9fafb;
+    line-height: 1.7;
+  }
+
+  h1, h2, h3, .card-title {
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  .card {
+    border: 1px solid #e5e8eb;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.2s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .card-header {
+    background-color: #f1f3f5;
+    padding: 1rem 1.25rem;
+    font-size: 1.1rem;
+  }
+
+  .card-text {
+    font-size: 0.95rem;
+    color: #495057;
+  }
+
+  .btn-info {
+    background-color: #64f0faff;
+    border: none;
+    font-weight: 500;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+  }
+
+  .btn-info:hover {
+    background-color: #2563eb;
+  }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+</style>
+
+</head>
+<body>
+  <nav class="navbar px-4 sticky-top navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme='dark'>
+  <div class="container-fluid">
+    <div class="nav-left">
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav align-items-center">
+          <li class="nav-item">
+            <a class="navbar-brand" href="{% url 'books:index' %}">Home</a>
+          </li>
+          <li class='nav-item'>
+            <a class="nav-link active" aria-current="page" href="{% url 'books:create' %}">새 글</a>
+          </li>
+          {% comment %} <li class="nav-item">
+            <a class="nav-link active" href=" {% url '' %}">nav3</a>
+          </li> {% endcomment %}
+        </ul>
+      </div>
+    </div>
+    <div class='nav-right'>
+      {% if request.user.is_authenticated %}
+        <a href="{% url 'accounts:update' %}">회원정보 수정</a> |
+        <a href="{% url 'accounts:delete' %}">회원탈퇴</a> |
+        {% comment %} <a href="{% url 'accounts:detail' %}">MYPROFILE</a> | {% endcomment %}
+        <a href="{% url 'accounts:logout' %}">LOGOUT</a>
+
+
+      {% else %}
+        <a href="{% url 'accounts:login' %}">LOGIN</a> |
+        <a href="{% url 'accounts:signup' %}">SIGNUP</a>
+
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+  {% block content %}
+
+  {% endblock content %}
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>

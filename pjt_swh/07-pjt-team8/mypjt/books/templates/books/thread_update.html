@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+ <div class="d-flex gap-2 ms-3 mb-3 mt-3">
+    <form href="{% url 'books:thread_update' thread.id %}" method="POST" class='my-0'>
+      {% csrf_token %}
+      {{ form.as_p }}  
+      <button class="btn btn-secondary">전송</button>
+    </form>
+
+    <form action="{% url 'books:thread_detail' thread.id %}" class='my-0'>
+        <button class="btn btn-danger">취소</button>
+    </form>
+  </div>
+
+  
+{% endblock %}

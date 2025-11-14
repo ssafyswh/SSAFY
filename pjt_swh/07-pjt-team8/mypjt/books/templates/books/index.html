@@ -1,0 +1,19 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+  <div class='row row-cols-1 mt-4 mx-5 g-4'>
+  {% for book in books %}
+    <div class='col-6'>
+      <div class="card">
+        <div class='card-header align-middle'>
+          <span class="card-title fw-bolder mb-0">{{ book.title }}</span>
+        </div>
+        <div class="card-body">
+          <p class="card-text">{{ book.content }}</p>
+          <a class="btn btn-info" href="{% url "books:detail" book.id %}" role="button">상세 정보</a>
+        </div>
+    </div>
+  </div>
+  {% endfor %}
+   </div>
+{% endblock content %}
