@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>패럴랙스 스크롤</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #87ceeb;
+      height: 600vh;
+    }
+
+    /* 패럴랙스 레이어들 */
+    .parallax-layer {
+      position: fixed;
+      /* top: 0;
+      left: 0; */
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    /* 산 레이어 (가장 느리게) */
+    .layer-mountain {
+      z-index: 1;
+    }
+
+    /* 구름 레이어 */
+    .layer-cloud {
+      z-index: 2;
+    }
+
+    /* 나뭇가지 레이어 */
+    .layer-branch {
+      z-index: 3;
+      justify-content: flex-start;
+      padding-bottom: 300px;
+    }
+
+    /* 새 레이어 (가장 빠르게) */
+    .layer-bird {
+      z-index: 4;
+      padding-bottom: 300px;
+    }
+
+    /* 배경 - 산 (거대한 크기, 초록색) */
+    .layer-mountain .shape {
+      border-left: 450px solid transparent;
+      border-right: 450px solid transparent;
+      border-bottom: 800px solid #2d7a2d;
+    }
+    
+    /* 구름 (이모지) */
+    .layer-cloud .shape {
+      font-size: 180px;
+      padding-bottom: 500px;
+    }
+    
+    /* 나무 가지 (왼쪽으로 긴 형태) */
+    .layer-branch .shape {
+      width: 80%;
+      height: 25px;
+      background: rgba(101, 67, 33, 0.8);
+      border-radius: 12px;
+    }
+
+    /* 새 */
+    .layer-bird .shape {
+      font-size: 80px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 패럴랙스 레이어들 -->
+  <div class="parallax-layer layer-mountain">
+    <div class="shape"></div>
+  </div>
+
+  <div class="parallax-layer layer-cloud">
+    <div class="shape">☁️</div>
+  </div>
+
+  <div class="parallax-layer layer-branch">
+    <div class="shape"></div>
+  </div>
+
+  <div class="parallax-layer layer-bird">
+    <div class="shape">🦅</div>
+  </div>
+
+  <script>
+    // (코드 작성) 각 요소 선택
+
+    // (코드 작성) 각 레이어의 속도 설정
+
+    window.addEventListener('scroll', () => {
+      // (코드 작성) 현재 스크롤 위치
+
+      // 각 레이어를 다른 속도로 이동
+      // (코드 작성) 산은 천천히 대각선 아래로 내려가며 가까워지는 효과
+      
+      // (코드 작성) 구름은 천천히 우측으로 흘러가는 효과
+      
+      // (코드 작성) 나뭇가지는 조금씩 아래로 내려가는 효과
+
+      // (코드 작성) 새는 좌상단 대각선으로 날아가는 효과
+      
+    })
+  </script>
+</body>
+</html>

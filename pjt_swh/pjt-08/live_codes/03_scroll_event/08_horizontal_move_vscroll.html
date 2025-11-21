@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>  /* 작성해야하는 CSS 부분 존재 */
+      /* 기본 리셋 */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* 스크롤을 위한 전체 높이 설정 - 스크롤이 되지 않으면 이벤트가 발생하지 않음 */
+      /* 가로 스크롤 길이와 동일하게 세로 스크롤 길이 확보 */
+      .horizontal-container {
+        height: 500vh;      /* 세로 스크롤 구간 생성 */
+      }
+
+      /* 고정되는 가로 스크롤 영역 */
+      .horizontal-wrapper {
+        /* sticky가 없으면 스크롤과 함께 화면이 내려가 요소들이 사라짐 */
+        /* fixed로 하면 다른 요소들이 있는 경우 가려지게 됨 */
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        /* (코드 작성) 넘치는 부분 숨김 (생략하면 그냥 가로 스크롤을 움직여서 볼 수 있음, 즉 가로 스크롤이 아닌 곳은 큰 공백이 발생하게 됨) */
+
+      }
+
+      /* 실제 가로로 움직이는 부분 */
+      .horizontal-track {
+        /* (코드 작성) 가로로 움직일 페이지들을 가로로 배치 */
+
+      }
+
+      /* 개별 페이지 */
+      .page {
+        /* (코드 작성) 화면에 맞게 페이지 사이즈 설정 */
+        
+        /* 스타일링 */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-right: 1px solid #ddd;
+        background: lightcyan;
+      }
+
+      .page h2 {
+        font-size: 2rem;
+        color: #333;
+      }
+    </style>
+</head>
+<body>
+  
+  <div class="page">
+    <h2>세로 페이지 1</h2>
+  </div>
+
+  <div class="horizontal-container">
+    <div class="horizontal-wrapper">
+      <div class="horizontal-track">
+        <div class="page">
+          <h2>가로 페이지 1</h2>
+        </div>
+        <div class="page">
+          <h2>가로 페이지 2</h2>
+        </div>
+        <div class="page">
+          <h2>가로 페이지 3</h2>
+        </div>
+        <div class="page">
+          <h2>가로 페이지 4</h2>
+        </div>
+        <div class="page">
+          <h2>가로 페이지 5</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <h2>세로 페이지 2</h2>
+  </div>
+
+  <script>
+    // 필요한 요소들 가져오기
+    const horizontalContainer = document.querySelector('.horizontal-container')
+    const horizontalTrack = document.querySelector('.horizontal-track')
+
+    // 가로 스크롤 위치 업데이트 함수
+    function updateHorizontalPosition() {
+      // getBoundingClientRect: 요소의 화면상 위치 정보
+      const containerRect = horizontalContainer.getBoundingClientRect()
+      const containerHeight = horizontalContainer.offsetHeight // 컨테이너 전체 높이 (500vh)
+      const windowHeight = window.innerHeight // 브라우저 창 높이
+
+      // (코드 작성) 가로 스크롤 영역(horizontal-container)이 화면에 보이는 동안만 실행
+
+    }
+
+    // 스크롤 이벤트 리스너 등록
+    window.addEventListener('scroll', updateHorizontalPosition)
+  </script>
+</body>
+</html>

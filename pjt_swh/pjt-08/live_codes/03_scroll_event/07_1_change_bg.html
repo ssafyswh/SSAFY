@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>스크롤 배경색 변경</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* 현재 색상 정보 표시 */
+    .color-info {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 15px;
+      z-index: 1000;
+    }
+
+    /* 컨텐츠 */
+    .content {
+      padding: 50px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .section {
+      margin-bottom: 100vh;
+      padding: 50px;
+      background: rgba(255, 255, 255, 0.9);
+      text-align: center;
+    }
+
+    .color-preview {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: 20px auto;
+    }
+
+    /* 해와 달 컨테이너 */
+    .sky {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    /* 해 스타일 (이모지) */
+    .sun {
+      position: absolute;
+      font-size: 160px;
+      top: 50%;
+    }
+
+    /* 달 스타일 (이모지) */
+    .moon {
+      position: absolute;
+      font-size: 140px;
+      top: 50%;
+    }
+  </style>
+</head>
+<body>
+  <!-- 하늘 (해와 달) -->
+  <div class="sky">
+    <div class="sun" id="sun">☀️</div>
+    <div class="moon" id="moon">🌙</div>
+  </div>
+
+  <!-- 현재 색상 정보 -->
+  <div class="color-info">
+    <h3>현재 배경색</h3>
+    <div class="current-color" id="colorDisplay">rgb(255, 100, 100)</div>
+    <div style="margin-top: 10px;">
+      <strong>진행률:</strong> <span id="progressText">0%</span>
+    </div>
+  </div>
+
+  <!-- 컨텐츠 -->
+  <div class="content">
+    <div class="section">
+      <h2>🌅 새벽</h2>
+      <p>페이지가 시작될 때는 따뜻한 분홍색으로 시작합니다.</p>
+    </div>
+
+    <div class="section">
+      <h2>🌄 아침</h2>
+      <p>스크롤하면서 색상이 오렌지로 변화합니다.</p>
+    </div>
+
+    <div class="section">
+      <h2>☀️ 낮</h2>
+      <p>낮 시간대에는 밝은 하늘색이 됩니다.</p>
+    </div>
+
+    <div class="section">
+      <h2>🌅 저녁</h2>
+      <p>저녁에는 보라색 계열로 변화합니다.</p>
+    </div>
+
+    <div class="section">
+      <h2>🌙 밤</h2>
+      <p>마지막에는 어두운 밤 색상으로 마무리됩니다.</p>
+    </div>
+  </div>
+
+  <script>
+    //  DOM 요소들 선택
+    const colorDisplay = document.querySelector('#colorDisplay')
+    const progressText = document.querySelector('#progressText')
+    const sun = document.querySelector('#sun')
+    const moon = document.querySelector('#moon')
+
+    // 해와 달의 크기 (CSS font-size에서 가져오기)
+    const sunSize = parseInt(window.getComputedStyle(sun).fontSize)
+    const moonSize = parseInt(window.getComputedStyle(moon).fontSize)
+
+    // 색상 배열 (RGB 값)
+    const colors = [
+      { r: 255, g: 100, b: 100 },  // 분홍 (새벽)
+      { r: 255, g: 165, b: 0 },    // 오렌지 (아침)
+      { r: 135, g: 206, b: 250 },  // 하늘색 (낮)
+      { r: 147, g: 112, b: 219 },  // 보라 (저녁)
+      { r: 25, g: 25, b: 112 }     // 네이비 (밤)
+    ]
+
+    // 해와 달의 위치 계산
+    function calculateCelestialPosition(progress, isNightTime = false) {
+      // 창의 가로 너비
+      const screenWidth = window.innerWidth
+
+      // (코드 작성) 낮일 때, 해의 정보 계산
+
+      // (코드 작성) 밤일 때, 달의 정보 계산
+      
+    }
+
+
+    // RGB 객체를 CSS 문자열로 변환
+    function rgbToString(color) {
+      return `rgb(${color.r}, ${color.g}, ${color.b})`
+    }
+
+    // 스크롤 이벤트 처리
+    function updateBackground() {
+      // (코드 작성) 현재 스크롤 위치와 진행률 계산
+
+      // (코드 작성) 진행률을 색상 인덱스로 변환
+
+      // (코드 작성) 정해진 색상 적용
+
+      // (코드 작성) 해의 위치 업데이트
+      
+      // (코드 작성) 달의 위치 업데이트
+      
+      // 정보 업데이트
+      colorDisplay.textContent = colorString
+      progressText.textContent = `${Math.round(progress * 100)}%`
+    }
+
+    // 스크롤 이벤트 리스너 등록
+    window.addEventListener('scroll', updateBackground)
+    // 창 크기 변경 시에도 위치 재계산
+    window.addEventListener('resize', updateBackground)
+
+    // 페이지 로드 시 초기 실행
+    updateBackground()
+  </script>
+</body>
+</html>

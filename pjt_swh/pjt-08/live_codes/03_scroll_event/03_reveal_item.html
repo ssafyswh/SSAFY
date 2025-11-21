@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>스크롤 요소 나타내기</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .section {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+      margin: 20px;
+      border-radius: 10px;
+    }
+
+    .card {
+      background: #333;
+      color: white;
+      padding: 40px;
+      border-radius: 10px;
+      text-align: center;
+      opacity: 0;
+      /* 나타나면 내려오는 모션을 위해 처음부터 위쪽에 위치 */
+      transform: translateY(50px);
+      /* 모든 움직임에 부드러운 전환을 위해 설정 */
+      transition: all 0.8s ease;
+    }
+
+    .card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .card h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="section">
+    <div class="card">
+      <h2>첫 번째 카드</h2>
+      <p>스크롤하면 스르륵 나타납니다</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="card">
+      <h2>두 번째 카드</h2>
+      <p>스크롤하면 스르륵 나타납니다</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="card">
+      <h2>세 번째 카드</h2>
+      <p>스크롤하면 스르륵 나타납니다</p>
+    </div>
+  </div>
+
+  <script>
+    // (코드 작성) 카드 요소들 선택
+
+    // 스크롤 이벤트 처리 함수
+    function checkScroll() {
+      const windowHeight = window.innerHeight  // 현재 창의 높이
+
+      // (코드 작성) 카드 별로 특정 위치에 오면 나타나도록 설정
+
+    }
+
+    // 스크롤 이벤트 리스너
+    window.addEventListener('scroll', checkScroll)
+
+  </script>
+</body>
+</html>

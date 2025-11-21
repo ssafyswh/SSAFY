@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 기본 페이지 레이아웃 */
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+    }
+
+    /* 카드 컨테이너 */
+    .card-container {
+      display: flex;
+      gap: 20px;
+      padding: 30px;
+    }
+
+    /* 카드 기본 형태 */
+    .card {
+      width: 80px;
+      height: 120px;
+      border: 1px solid black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      cursor: grab;
+      user-select: none;
+    }
+
+    /* 드래그 중인 카드 */
+    .card.dragging {
+      opacity: 0.3;
+      cursor: grabbing;
+    }
+
+    .description {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>드래그 앤 드롭 카드 정렬</h1>
+  <div class="description">
+    카드를 마우스로 드래그해서 순서를 바꿔보세요
+  </div>
+
+  <div class="card-container" id="card-container">
+    <div class="card" draggable="true">1</div>
+    <div class="card" draggable="true">2</div>
+    <div class="card" draggable="true">3</div>
+    <div class="card" draggable="true">4</div>
+    <div class="card" draggable="true">5</div>
+  </div>
+
+  <script>
+    // 드래그 이벤트를 추가하기 위해 선택
+    const container = document.querySelector('#card-container')
+    let draggedCard = null  // 드래그 중인 카드 저장 변수
+
+    // 1. 드래그 시작 리스너
+    // 현재 드래그 중인 것을 표시하기 위함
+    container.addEventListener('dragstart', (e) => {
+      // (코드 작성) 드래그 카드 저장
+
+    })
+
+    // 2. 드래그 중
+    // 드래그 위치를 계산해서 카드가 들어갈 곳을 표시하기 위함
+    // 모든 카드의 위치를 가져온 다음
+    // 드래그 중인 카드의 위치와 가장 가까운 카드를 찾고
+    // 드래그 중인 카드가 해당 카드 앞에 있는지 뒤에 있는지를 판단하여 위치를 이동
+    container.addEventListener('dragover', (e) => {
+      // (코드 작성) 기본 이벤트 중지
+      
+      // (코드 작성) 드래그 중이 아닌 카드를 전부 선택
+      
+      // (코드 작성) 드래그 중인 카드와 가장 가까운 카드찾기 위한 초기화
+      
+      // (코드 작성) 가장 가까운 카드 찾는 알고리즘 구현
+      
+      // (코드 작성) 드래그 중인 카드 위치 변경
+      
+    })
+
+    // 3. 드래그 종료
+    // 드래그 중 표시를 제거하기 위함
+    container.addEventListener('dragend', (e) => {
+      // (코드 작성) 드래그 카드 초기화
+
+    })
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 콜백함수 예시 1
+    const numbers = [1, 2, 3]
+    numbers.forEach(function (num) {
+      console.log(num)
+    })
+
+    // 콜백함수 예시 2
+    const callBackFunction = function (num) {
+      console.log(num)
+    }
+    numbers.forEach(callBackFunction)
+
+    // forEach
+    // 일반 함수 표기
+    const names = ['Alice', 'Bella', 'Cathy']
+    names.forEach(function (name) {
+      console.log(name)
+    })
+
+    // 화살표 함수 표기
+    names.forEach((name) => {
+      console.log(name)
+    })
+
+    // 활용
+    const result = names.forEach(function (name, index, array) {
+      console.log(`${name} / ${index} / ${array}`)
+      return 'aaa'
+    })
+    console.log(result)
+
+    // map 
+    // 1. for...of 와 비교
+    const persons = [
+      { name: 'Alice', age: 20 },
+      { name: 'Bella', age: 21 }
+    ]
+
+    // 1.1 for...of
+    let result1 = []
+    for (const person of persons) {
+      result1.push(person.name)
+    }
+    console.log(result1)
+
+    // 1.2 map
+    const result2 = persons.map(function (person) {
+      return person.name
+    })
+    console.log(result2)
+
+
+    // 2. 화살표 함수 표기
+    const result3 = names.map(function (name) {
+      return name.length
+    })
+
+    const result4 = names.map((name) => {
+      return name.length
+    })
+    console.log(result3) // [5, 5, 5]
+    console.log(result4) // [5, 5, 5]
+
+
+    // 3. 커스텀 콜백 함수
+    const myCallbackFunc = function (number) {
+      return number * 2
+    }
+    const doubleNumber = numbers.map(myCallbackFunc)
+    console.log(doubleNumber) // [2, 4, 6]
+  </script>
+</body>
+
+</html>

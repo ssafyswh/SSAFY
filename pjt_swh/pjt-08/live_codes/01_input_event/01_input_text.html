@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 20px;
+        background: white;
+      }
+
+      .text-input {
+        width: 300px;
+        padding: 10px;
+        font-size: 16px;
+        border: 2px solid black;
+      }
+
+      /* 20자를 넘어갔을 때의 스타일 */
+      /* class가 text-input이고 error 이면 적용됨 */
+      .text-input.error {
+        background-color: #ffcccc;
+        animation: shake 0.5s;
+      }
+
+      .counter {
+        margin-top: 10px;
+      }
+
+      /* 움직임을 정의 이름은 shake */
+      /* 실행되면 제자리에서 좌로 갔다가 우로 갔다가 제자리로 돌아오는 움직임 정의 */
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        } /* 시작과 끝은 제자리 */
+        25% {
+          transform: translateX(-5px);
+        } /* 25% 시점은 -5px 이동 (좌측) */
+        75% {
+          transform: translateX(5px);
+        } /* 75% 시점은 5px 이동 (우측) */
+      }
+    </style>
+  </head>
+  <body>
+    <h1>텍스트 입력 제한 (20자)</h1>
+    <input
+      type="text"
+      class="text-input"
+      id="textInput"
+      placeholder="최대 20자"
+    />
+    <div class="counter" id="counter">0 / 20</div>
+
+    <script>
+      const maxLength = 20; // 최대 문자 개수
+      // (코드 작성) 사용자의 입력을 확인하기 위해 입력창 선택
+      document.querySelector("#textInput");
+      // (코드 작성) 입력 문자 개수를 조작하기 위해 해당 요소 선택
+
+      // 사용자의 입력이 있으면
+      textInput.addEventListener("input", function (e) {
+        // 최대 길이를 넘기면 더 이상 입력을 받지 않고 class에 error를 추가하여 스타일링
+        //   단, 일시적으로 스타일이 적용될 수 있도록 setTimeout 사용하여 class error 제거
+        // (코드 작성)
+
+        // 글자 수 표시
+        counter.textContent = `${e.target.value.length} / ${maxLength}`;
+      });
+    </script>
+  </body>
+</html>

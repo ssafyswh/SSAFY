@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const user = {
+      name: 'Alice',
+      'key with space': true,
+      greeting: function () {
+        return 'hello'
+      }
+    }
+
+    // 조회
+    console.log(user.name) // Alice
+    // console.log(user.'key with space')
+    console.log(user['key with space']) // true
+
+    // 추가
+    user.address = 'korea'
+    console.log(user) // {name: 'Alice', key with space: true, address: 'korea', greeting: ƒ}
+
+    // 수정
+    user.name = 'Bella'
+    console.log(user.name) // Bella
+
+    // 삭제
+    delete user.name
+    console.log(user) // {key with space: true, address: 'korea', greeting: ƒ}
+
+    // in 연산자
+    console.log('greeting' in user) // true
+    console.log('country' in user) // false
+
+    // 메서드 호출
+    console.log(user.greeting()) // hello
+
+    // 1. 객체 표기법 
+    // 점 표기법: 정적인 변수
+    // 대괄호 표기법: 동적인 변수
+    const user = { name: "Alice", age: 30 };
+
+    for (let key in user) {
+        console.log(user.key); // undefined 
+        console.log(user[key]); // "Alice", 30
+    }
+
+    // 2. in 연산자
+    const user2 = { name: "Alice" };
+
+    console.log("name" in user2);
+
+    console.log("toString" in user2);
+
+    // 방법 1 (Classic): .hasOwnProperty()
+    console.log(user.hasOwnProperty("name"));     // true
+    console.log(user.hasOwnProperty("toString")); // false (이건 조상님 꺼!)
+
+    // 방법 2 (ES2022): Object.hasOwn()
+    // Object.create() 로 객체를 생성한 경우, hasOwnProperty 속성이 없을 수 있음 => 에러 
+    console.log(Object.hasOwn(user, "name"));     // true
+    console.log(Object.hasOwn(user, "toString")); // false
+    </script>
+  </script>
+</body>
+
+</html>
