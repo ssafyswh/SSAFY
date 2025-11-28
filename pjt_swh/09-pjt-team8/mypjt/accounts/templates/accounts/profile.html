@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ person.username }}님의 프로필</h1>
+  <hr>
+
+  {% if person.profile_img %}
+    <img src="{{ person.profile_img.url }}" alt="프로필 사진" style="width:200px; height:200px; object-fit: cover; border-radius: 50%; margin-bottom:3rem;">
+  {% endif %}
+  
+  <p>아이디: {{ person.username }}</p>
+  <p>이메일: {{ person.email }}</p>
+  <p>이름: {{ person.last_name }}{{ person.first_name }}</p>
+  <p>성별: {{ person.get_gender_display }}</p>
+  <p>나이: {{ person.age }}</p>
+  <p>주간 평균 독서 시간: {{ person.weekly_avg_reading_time }}시간</p>
+  <p>연간 독서량: {{ person.annual_reading_amount }}권</p>
+  <p>관심 장르: 
+    {% for category in person.interested_genres.all %}
+      <li>{{ category.name }}</li>
+    {% empty %}
+      없음
+    {% endfor %}
+  </p>
+  <hr>
+  <div class="d-flex flex-row justify-content-between align-items-center">
+    <div>
+      팔로잉: <span id="followings-count">{{ person.followings.all|length }}</span> / 
+      팔로워: <span id="followers-count">{{ person.followers.all|length }}</span>
+    </div>
+
+    {% if request.user.is_authenticated and request.user != person %}
+      <form id="follow-form" action="{% url 'accounts:follow' person.pk %}" method="POST">
+        {% csrf_token %}
+        {% if request.user in person.followers.all %}
+          <button type="submit" class="btn btn-secondary">언팔로우</button>
+        {% else %}
+          <button type="submit" class="btn btn-primary">팔로우</button>
+        {% endif %}
+      </form>
+    {% endif %}
+  </div>
+  <hr>
+  <h2>{{ person.username }}님의 쓰레드 목록</h2>
+  <ul>
+    {% for thread in person.thread_set.all %}
+      <li>
+        <a href="{% url 'books:thread_detail' thread.book.pk thread.pk %}">
+          {{ thread.title }}
+        </a>
+        - 좋아요: {{ thread.likes.count }}
+      </li>
+    {% empty %}
+      <li>작성된 쓰레드가 없습니다.</li>
+    {% endfor %}
+  </ul>
+{% endblock content %}
+
+{% block script %}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <script>
+    const form = document.querySelector('#follow-form')
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+    if (form) {
+      form.addEventListener('submit', function (event) {
+        event.preventDefault()
+        
+        const url = event.target.action
+        
+        // views.py의 follow 함수로 비동기 요청 전송
+        axios({
+          method: 'post',
+          url: url, // urls.py 경로 확인 필요
+          headers: {'X-CSRFToken': csrftoken},
+        })
+        .then((response) => {
+          // 1. 팔로우 여부에 따라 버튼 모양/텍스트 변경
+          const isFollowed = response.data.is_followed
+          const followBtn = document.querySelector('#follow-form > button')
+          
+          if (isFollowed === true) {
+            followBtn.innerText = '언팔로우'
+            followBtn.classList.remove('btn-primary') // 스타일은 상황에 맞게 조정
+            followBtn.classList.add('btn-secondary')
+          } else {
+            followBtn.innerText = '팔로우'
+            followBtn.classList.remove('btn-secondary')
+            followBtn.classList.add('btn-primary')
+          }
+
+          // 2. 팔로잉/팔로워 숫자 업데이트
+          const followingsCountTag = document.querySelector('#followings-count')
+          const followersCountTag = document.querySelector('#followers-count')
+          
+          followingsCountTag.innerText = response.data.followings_count
+          followersCountTag.innerText = response.data.followers_count
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      })
+    }
+  </script>
+{% endblock script %}

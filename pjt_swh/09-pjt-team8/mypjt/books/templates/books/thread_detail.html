@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+  {% if thread.cover_img %}
+  <div class="mb-3" style="width: 100%;">
+    <img src="{{ thread.cover_img.url }}" alt="Thread Cover Image" class="img-fluid">
+  </div>
+  {% endif %}
+
+  <div class="d-flex flex-row justify-content-between align-items-between">
+    <h1 class="mb-3">{{ thread.title }}</h1>
+    <div>
+      {% if thread.user == user %}
+        <a href="{% url 'books:thread_update' book.pk thread.pk %}" class="btn btn-secondary">수정</a>
+        <form action="{% url 'books:thread_delete' book.pk thread.pk %}" method="POST" class="d-inline ms-2">
+          {% csrf_token %}
+          <input type="submit" value="삭제" class="btn btn-danger">
+        </form>
+      {% endif %}
+    </div>
+  </div>
+  
+  <div class="mb-2">
+    <strong>도서:</strong> <a href="{% url 'books:detail' book.pk %}">{{ book.title }}</a>
+    <strong class="ms-2">작성자:</strong> <a href="{% url 'accounts:profile' thread.user.username %}">{{ thread.user.username }}</a>
+    <strong class="ms-2">독서일:</strong> {{ thread.reading_date }}
+  </div>
+  
+  <div class="mb-3">
+    <p>{{ thread.content }}</p>
+  </div>
+  
+  <div class="d-flex flex-row justify-content-start align-items-center gap-4">
+    <form id="like-form" action="{% url 'books:likes' book.pk thread.pk %}" method="POST">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-success d-flex align-items-center gap-2" id="like-btn">
+        <span id="like-icon">
+          {% if request.user in thread.likes.all %}
+            좋아요 취소
+          {% else %}
+            좋아요
+          {% endif %}
+        </span>
+        <span id="like-count" class="badge bg-white text-success rounded-pill">
+          {{ thread.likes.count }}
+        </span>
+      </button>
+    </form>
+  </div>
+  <hr>
+  
+  <!-- 쓰레드 댓글 출력 섹션 -->
+  <h3>댓글</h3>
+  <div class="mb-3" id="comment-list">
+    {% for comment in thread.comments.all %}
+      <div id="comment-{{ comment.pk }}" class="d-flex flex-row align-items-baseline gap-2">
+        <p>{{ comment.content }}</p>
+        <small ><a href="{% url 'accounts:profile' comment.user.username %}"> ({{ comment.user.username }})</a></small>
+        {% if comment.user == user %}
+          <button class="delete-comment-btn " data-comment-id="{{ comment.pk }}">삭제</button>
+        {% endif %}
+      </div>
+    {% empty %}
+      <p id="no-comments">작성된 댓글이 없습니다.</p>
+    {% endfor %}
+  </div>
+
+  <!-- 댓글 작성 폼 -->
+  <h4>댓글 작성</h4>
+  {% comment %} <form id="comment-form" method="POST" action="{% url 'books:create_comment' book.pk thread.pk %}">
+    {% csrf_token %}
+    {{ comment_form.content }}
+    <input type="submit" value="전송" id="send">
+  </form> {% endcomment %}
+  
+    <form id="comment-form" data-book-id="{{ book.pk }}" data-thread-id="{{ thread.pk }}">
+    {% csrf_token %}
+    {{ comment_form.content }}
+    <input type="submit" value="전송">
+  </form>
+
+  <hr>
+  
+  <a href="{% url 'books:detail' thread.book.pk %}" class="btn btn-secondary">BACK</a>
+</div>
+{% endblock content %}
+
+
+{% block script %}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const likeForm = document.querySelector('#like-form')
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+      if (likeForm) {
+        likeForm.addEventListener('submit', function(event) {
+          event.preventDefault() // 새로고침 방지
+
+          const url = event.target.action // form의 action 속성(URL) 가져오기
+
+          axios({
+            method: 'post',
+            url: url,
+            headers: {'X-CSRFToken': csrftoken},
+          })
+          .then((response) => {
+            const isLiked = response.data.is_liked
+            const likesCount = response.data.likes_count
+            
+            const likeIcon = document.querySelector('#like-icon')
+            const likeCountSpan = document.querySelector('#like-count')
+
+            // 1. 하트 모양 변경
+            if (isLiked === true) {
+              likeIcon.innerText = '좋아요 취소' // 꽉 찬 하트로 변경
+            } else {
+              likeIcon.innerText = '좋아요' // 빈 하트로 변경
+            }
+
+            // 2. 숫자 업데이트
+            likeCountSpan.innerText = likesCount
+          })
+          .catch((error) => {
+            console.log(error)
+            // 비로그인 상태 등 에러 처리
+            if (error.response && error.response.status === 401) {
+              alert('로그인이 필요합니다.')
+              window.location.href = '/accounts/login/' 
+            }
+          })
+        })
+      }
+    });
+  </script>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  {% comment %} const obj = axios({
+    method: 'get',
+    url: 'https://www.naver.com/'
+  })
+  
+  obj.then((response)=>{
+    console.log('gooooood')
+  }) {% endcomment %}
+  
+  const form = document.querySelector('#comment-form')
+  form.addEventListener('submit', function(event){
+    event.preventDefault()
+
+    const bookId = event.currentTarget.dataset.bookId
+    const threadId = event.currentTarget.dataset.threadId
+    const content = document.querySelector('#id_content')
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+    const formData = new FormData();
+    formData.append('content', content.value);
+
+    axios({
+      method: 'post',
+      url: `/books/${bookId}/comment/${threadId}/create/`,
+      headers: {'X-CSRFToken': csrftoken},
+      data: formData,
+      }).then(response => {
+        // console.log('성공: ', response)
+        const data = response.data;
+        const commentList = document.querySelector('#comment-list');
+        const noComments = document.querySelector('#no-comments');
+
+        // 1. "작성된 댓글이 없습니다" 문구가 있다면 제거
+        if (noComments) {
+          noComments.remove();
+        }
+
+        // 2. 추가할 HTML 문자열 생성 (님 HTML 구조와 동일하게 맞춤)
+        // 주의: 프로필 URL 경로는 '/accounts/profile/유저명/' 패턴이라고 가정함
+        const newCommentHtml = `
+          <div id="comment-${data.commentPk}" class="d-flex flex-row align-items-baseline gap-2">
+            <p>${data.content}</p>
+            <small>
+              <a href="/accounts/profile/${data.userName}/"> (${data.userName})</a>
+            </small>
+            <button class="delete-comment-btn" data-comment-id="${data.commentPk}">삭제</button>
+          </div>
+        `;
+
+        // 3. 댓글 목록의 맨 끝(beforeend)에 HTML 추가
+        commentList.insertAdjacentHTML('beforeend', newCommentHtml);
+
+        // 4. 입력창 비우기
+        content.value = '';
+      })
+
+      
+    })
+
+  const commentList = document.querySelector('#comment-list')
+  commentList.addEventListener('click', function(event) {
+    console.log('click clikc')
+    // 1. 클릭된 요소가 '삭제 버튼'인지 확인
+    if (event.target.classList.contains('delete-comment-btn')) {
+      
+      // 2. 삭제 의사 확인
+      if (!confirm('정말 삭제하시겠습니까?')) return;
+
+      // 3. 데이터 가져오기
+      // 버튼에 심어둔 data-comment-id 값을 가져옴
+      const commentId = event.target.dataset.commentId
+      // bookId는 상단 폼 태그에서 가져옴 (HTML 구조상 리스트에는 없으므로)
+      const bookId = document.querySelector('#comment-form').dataset.bookId
+      const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+      // 4. Axios 삭제 요청
+      axios({
+        method: 'post',
+        // urls.py 경로: <int:book_pk>/comment/<int:comment_pk>/delete/
+        url: `/books/${bookId}/comment/${commentId}/delete/`,
+        headers: {'X-CSRFToken': csrftoken},
+      })
+      .then(response => {
+        console.log('삭제 성공');
+        
+        // 5. HTML에서 해당 댓글 div 제거
+        // 제공해주신 HTML id 구조가 comment-{{ comment.pk }} 이므로 이에 맞춤
+        const commentDiv = document.querySelector(`#comment-${commentId}`);
+        if (commentDiv) {
+            commentDiv.remove();
+        }
+      })
+      .catch(error => {
+        console.log('삭제 실패', error);
+      });
+    }
+  })
+</script>
+
+
+{% endblock script %}

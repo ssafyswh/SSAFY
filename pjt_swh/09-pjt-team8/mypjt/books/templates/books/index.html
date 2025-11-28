@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>메인 페이지</h1>
+
+  <!-- 기존 카테고리 필터 메뉴 -->
+  <div class="mb-4">
+    <ul class="list-inline" id="category-filter-list">
+      <li class="list-inline-item">
+        <a href="#" class="category-link" data-category-id="0">전체</a>
+      </li>
+      {% for category in categories %}
+        <li class="list-inline-item">
+          <a href="#" class="category-link" data-category-id="{{ category.id }}">{{ category.name }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div>
+    <small style="color: #888;">※ 도서 DB 제공 : 알라딘 인터넷서점(www.aladin.co.kr)</small>
+  </div>
+
+  <!-- 도서 목록 컨테이너 -->
+  <div class="row row-cols-1 row-cols-md-3 g-4 mt-4 mb-4" id="books-list">
+    {% if books %}
+      {% for book in books %}
+        <div class="col">
+          <div class="card book-card h-100">
+            {% if book.cover %}
+              <img src="{{ book.cover }}" class="card-img-top" alt="{{ book.title }} cover" />
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ book.title }}</h5>
+              <p class="card-text">{{ book.description|truncatechars:180 }}</p>
+              <h6 class="card-subtitle mb-2"><a href="{% url 'books:detail' book.pk %}" class="btn btn-success">Detail</a></h6>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div>등록된 도서가 없습니다.</div>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    // 모든 카테고리 링크 선택
+    const categoryLinks = document.querySelectorAll('.category-link')
+    const booksList = document.getElementById('books-list')
+    const detailUrlBase = "{% url 'books:index' %}"
+    
+    categoryLinks.forEach((link) => {
+      link.addEventListener('click', function (event) {
+        event.preventDefault()
+        const categoryId = event.currentTarget.dataset.categoryId // 선택된 카테고리 (전체일 경우 빈 문자열)
+    
+        axios
+          .get("{% url 'books:filter_category' %}", {
+            params: { category_id: categoryId }
+          })
+          .then((response) => {
+            // 도서 목록 초기화
+            booksList.innerHTML = ''
+            const books = response.data.books
+            if (books.length === 0) {
+              booksList.innerHTML = '<div class="col">선택한 분류에 해당하는 도서가 없습니다.</div>'
+              return
+            }
+            // 응답받은 JSON 데이터를 기반으로 도서 카드 생성
+            books.forEach((book) => {
+              const description = book.description || ''
+              const truncatedDescription = description.substring(0, 180) + (description.length > 180 ? '...' : '')
+              const detailUrl = `${detailUrlBase}${book.id}/`
+    
+              const colDiv = document.createElement('div')
+              colDiv.classList.add('col')
+    
+              const cardDiv = document.createElement('div')
+              cardDiv.classList.add('card', 'book-card', 'h-100')
+    
+              if (book.cover) {
+                const img = document.createElement('img')
+                img.src = book.cover
+                img.classList.add('card-img-top')
+                img.alt = `${book.title} cover`
+                cardDiv.appendChild(img)
+              }
+              const cardBody = document.createElement('div')
+              cardBody.classList.add('card-body')
+    
+              const title = document.createElement('h5')
+              title.classList.add('card-title')
+              title.textContent = book.title
+    
+              const desc = document.createElement('p')
+              desc.classList.add('card-text')
+              desc.textContent = truncatedDescription
+    
+              const subtitle = document.createElement('h6')
+              subtitle.classList.add('card-subtitle', 'mb-2')
+    
+              const detailLink = document.createElement('a')
+              detailLink.href = detailUrl
+              detailLink.classList.add('btn', 'btn-success')
+              detailLink.textContent = 'Detail'
+              subtitle.appendChild(detailLink)
+    
+              const categoryP = document.createElement('p')
+              categoryP.classList.add('text-muted', 'small')
+              categoryP.textContent = book.category_name
+    
+              cardBody.appendChild(title)
+              cardBody.appendChild(desc)
+              cardBody.appendChild(subtitle)
+              cardBody.appendChild(categoryP)
+    
+              cardDiv.appendChild(cardBody)
+              colDiv.appendChild(cardDiv)
+              booksList.appendChild(colDiv)
+            })
+          })
+          .catch((error) => {
+            console.log(error)
+            alert('도서 목록을 가져오는 중 오류가 발생했습니다.')
+          })
+      })
+    })
+  </script>
+{% endblock %}
