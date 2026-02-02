@@ -1,31 +1,24 @@
 #include <iostream>
 #include <string>
+#include <unordered_map>
 
 using namespace std;
+unordered_map<int, int> route(0);
 
-string replaceAll(string str, const string &from, const string &to)
-{
-    if (from.empty())
-        return str;
-    size_t start_pos = 0;
-    while ((start_pos = str.find(from, start_pos)) != string::npos)
-    {
-        str.replace(start_pos, from.length(), to);
-        start_pos += to.length();
+int main() {
+    int N, L;
+    string command;
+    cin >> N >> L >> command;
+    int pos = 0;
+    route[0] = 1;
+    for (char d : command) {
+        if (d == 'L') {
+            pos--;
+        } else {
+            pos++;
+        }
+        route[pos]++;
     }
-    return str;
-}
-
-int main()
-{
-    int T;
-    cin >> T;
-    for (int t = 0; t < T; t++)
-    {
-        string s, p;
-        cin >> s >> p;
-        replaceAll(s, p, "s");
-        cout << s.length() << "\n";
-    }
+    
     return 0;
 }
