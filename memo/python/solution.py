@@ -1,7 +1,3 @@
-# import sys
-
-# sys.stdin = open('input.txt')
-
 from heapq import heappush, heappop
 
 House = 0
@@ -28,7 +24,6 @@ def calculate(M, mCoffee, P, mBakery, R):
     Cafe_Weight = [INF] * House
     Bakery_Weight = [INF] * House
 
-    # 상점 위치 기록 (상점 제외 조건용)
     is_shop = [False] * House
 
     Cafe_Q = []
@@ -45,7 +40,6 @@ def calculate(M, mCoffee, P, mBakery, R):
         is_shop[node] = True
         heappush(Bakery_Q, (0, node))
 
-    # Cafe 다익스트라 (R 제한 추가)
     while Cafe_Q:
         w, n = heappop(Cafe_Q)
         if w > Cafe_Weight[n]: continue
@@ -55,7 +49,6 @@ def calculate(M, mCoffee, P, mBakery, R):
                 Cafe_Weight[nn] = next_w
                 heappush(Cafe_Q, (next_w, nn))
 
-    # Bakery 다익스트라 (R 제한 추가)
     while Bakery_Q:
         w, n = heappop(Bakery_Q)
         if w > Bakery_Weight[n]: continue
@@ -67,7 +60,7 @@ def calculate(M, mCoffee, P, mBakery, R):
 
     res = INF
     for i in range(House):
-        if is_shop[i]: continue  # 상점인 노드는 제외
+        if is_shop[i]: continue
         if Cafe_Weight[i] <= R and Bakery_Weight[i] <= R:
             res = min(res, Cafe_Weight[i] + Bakery_Weight[i])
 
